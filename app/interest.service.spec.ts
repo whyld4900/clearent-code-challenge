@@ -5,15 +5,11 @@ import { CardType } from './card.enum';
 
 describe("InterestService", () => {
 
-  let sandbox: sinon.SinonSandbox;
-  // let corpStoreStub: sinon.SinonStubbedInstance<CorpStore>;
+  const balance100Test: number = 100.00;
 
   let svc: InterestService;
 
   beforeEach(() => {
-
-    sandbox = sinon.createSandbox();
-    // corpStoreStub = sandbox.createStubInstance(CorpStore);
 
     TestBed.configureTestingModule({
       providers: [
@@ -24,17 +20,27 @@ describe("InterestService", () => {
     svc = TestBed.get(InterestService);
   });
 
-  afterEach(() => {
-    sandbox.restore();
+  it("will calculate interest for Discover", () => {
+
+    const resultToTest = svc.calculateInterestByCard(CardType.Discover, balance100Test);
+
+    expect(resultToTest).toBe(1);
+
   });
 
-  it("calculateInterestByCard-MC", () => {
+  it("will calculate interest for MC", () => {
 
-    const balanceTest = 100.00;  
-
-    const resultToTest = svc.calculateInterestByCard(CardType.MC, balanceTest);
+    const resultToTest = svc.calculateInterestByCard(CardType.MC, balance100Test);
 
     expect(resultToTest).toBe(5);
+
+  });
+
+  it("will calculate interest for Visa", () => {
+
+    const resultToTest = svc.calculateInterestByCard(CardType.Visa, balance100Test);
+
+    expect(resultToTest).toBe(10);
 
   });
 
