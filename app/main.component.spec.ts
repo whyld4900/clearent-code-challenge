@@ -88,14 +88,13 @@ describe('MainComponent', () => {
 
       component.wallets = testWallets;
       component.cards = testCards;
-      
+
       let testResult = component.sumInterestForPersonListByWallet(component.persons[0]);
-      console.log('testResult', testResult);
       let testSum = 0;
       Object.keys(testResult).forEach(id => { testSum += testResult[id] });
 
       expect(testSum).toBe(16);
-      expect(testResult[1]).toBe(5);
+      expect(testResult[2]).toBe(5);
 
     });
 
