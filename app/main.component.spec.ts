@@ -38,11 +38,11 @@ describe('MainComponent', () => {
 
   describe('1-person|1-wallet|3-cards', () => {
 
-    it('1-person|1-wallet|3-cards', () => {
+    it('will sum all the interest for a person', () => {
 
-      let testResult = component.getPersonCount();
+      let testResult = component.sumInterestByPerson(component.persons[0]);
 
-      expect(testResult).toEqual(1);
+      expect(testResult).toEqual(16);
 
     });
 

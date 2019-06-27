@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CardType } from './card.enum';
 import { Wallet } from './wallet.model';
 import { Card } from './card.model';
+import { InterestService } from './interest.service';
 
 @Component({
   selector: 'clearent-main',
@@ -15,8 +16,25 @@ export class MainComponent {
   @Input() wallets: Wallet[];
   @Input() cards: Card[];
 
-  public getPersonCount(): number {
-    return this.persons.length;
+  constructor(
+    public interestSVC: InterestService
+  ) { }
+
+  public sumInterestByPerson(id: number): number {
+
+    let sum = 0;
+
+    const personWallets = this.wallets.filter(wallet => wallet.personId === id);
+
+    personWallets.forEach(wallet => {
+      sum += this.cards.reduce((acc, card) => {
+        acc += this.interestSVC.calculateInterestByCard(card.id, card.balance);
+        return acc;
+      }, 0);
+    });
+
+    return sum;
+
   }
 
   public getWalletCount(): number {
