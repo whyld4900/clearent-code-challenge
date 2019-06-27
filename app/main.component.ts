@@ -28,7 +28,11 @@ export class MainComponent {
 
     personWallets.forEach(wallet => {
       sum += this.cards.reduce((acc, card) => {
-        acc += this.interestSVC.calculateInterestByCard(card.id, card.balance);
+
+        if (card.walletId === wallet.id) {
+          acc += this.interestSVC.calculateInterestByCard(card.id, card.balance);
+        }
+
         return acc;
       }, 0);
     });
@@ -45,9 +49,12 @@ export class MainComponent {
 
     personWallets.forEach(wallet => {
       this.cards.forEach(card => {
-        cardSums[card.id] = 0;
-        const interest = this.interestSVC.calculateInterestByCard(card.id, card.balance);
-        cardSums[card.id] += interest;
+        if (card.walletId === wallet.id) {
+          cardSums[card.id] = 0;
+          const interest = this.interestSVC.calculateInterestByCard(card.id, card.balance);
+          cardSums[card.id] += interest;
+        }
+
       });
     });
 
@@ -55,8 +62,25 @@ export class MainComponent {
 
   }
 
-  public getWalletCount(): number {
-    return this.wallets.length;
+  public sumInterestForPersonListByWallet(id: number): any {
+
+    let walletSums = {};
+
+    const personWallets = this.wallets.filter(wallet => wallet.personId === id);
+
+    personWallets.forEach(wallet => {
+      this.cards.forEach(card => {
+        if (card.walletId === wallet.id) {
+          walletSums[card.walletId] = 0;
+          const interest = this.interestSVC.calculateInterestByCard(card.id, card.balance);
+          walletSums[card.walletId] += interest;
+        }
+
+      });
+    });
+
+    return walletSums;
+
   }
 
 }

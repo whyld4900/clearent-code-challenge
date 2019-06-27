@@ -62,13 +62,37 @@ describe('MainComponent', () => {
 
   describe('1-person|2-wallet|3-cards', () => {
 
-    it('TODO-55555', () => {
+    const testWallets = [
+      { id: 1, personId: 1 },
+      { id: 2, personId: 1 }
+    ];
 
-      component.wallets = [{ id: 1, personId: 1 }, { id: 2, personId: 1 }];
+    const testCards = [
+      { id: CardType.Discover, walletId: 1, balance: 100.00 },
+      { id: CardType.MC, walletId: 2, balance: 100.00 },
+      { id: CardType.Visa, walletId: 1, balance: 100.00 }
+    ];
 
-      let testResult = component.getWalletCount();
+    it('will sum all the interest for a person', () => {
 
-      expect(testResult).toBe(2);
+      component.wallets = testWallets;
+      component.cards = testCards;
+
+      let testResult = component.sumInterestByPerson(component.persons[0]);
+
+      expect(testResult).toBe(16);
+
+    });
+
+    it('will sum all the interest for a person and break it down by wallet', () => {
+
+      let testResult = component.sumInterestForPersonListByWallet(component.persons[0]);
+      console.log('testResult', testResult);
+      let testSum = 0;
+      Object.keys(testResult).forEach(id => { testSum += testResult[id] });
+
+      expect(testSum).toBe(16);
+      expect(testResult[1]).toBe(5);
 
     });
 
