@@ -23,7 +23,7 @@ export class MainComponent {
   public sumInterestByPerson(id: number): number {
 
     let sum = 0;
-
+  
     const personWallets = this.wallets.filter(wallet => wallet.personId === id);
 
     personWallets.forEach(wallet => {
@@ -63,12 +63,13 @@ export class MainComponent {
   }
 
   public sumInterestForPersonListByWallet(id: number): any {
-
+console.log('this.walletsqqqqqqqwwwwwww', this.wallets);
     let walletSums = {};
-
+  
     const personWallets = this.wallets.filter(wallet => wallet.personId === id);
 
     personWallets.forEach(wallet => {
+
       this.cards.forEach(card => {
         if (card.walletId === wallet.id) {
           walletSums[card.walletId] = 0;

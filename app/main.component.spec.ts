@@ -86,6 +86,9 @@ describe('MainComponent', () => {
 
     it('will sum all the interest for a person and break it down by wallet', () => {
 
+      component.wallets = testWallets;
+      component.cards = testCards;
+      
       let testResult = component.sumInterestForPersonListByWallet(component.persons[0]);
       console.log('testResult', testResult);
       let testSum = 0;
