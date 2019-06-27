@@ -46,6 +46,14 @@ describe('MainComponent', () => {
 
     });
 
+     it('will sum all the interest for a person and break it down by card', () => {
+
+      let testResult = component.sumInterestForPersonListByCard(component.persons[0]);
+
+      expect(testResult).toEqual(16);
+
+    });
+
   });
 
   describe('1-person|2-wallet|3-cards', () => {

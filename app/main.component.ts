@@ -37,6 +37,25 @@ export class MainComponent {
 
   }
 
+  public sumInterestForPersonListByCard(id: number): any {
+
+    let cardSums = {};
+
+    const personWallets = this.wallets.filter(wallet => wallet.personId === id);
+
+    personWallets.forEach(wallet => {
+      this.cards.forEach(card => {
+        cardSums[card.id] = 0;
+        const interest = this.interestSVC.calculateInterestByCard(card.id, card.balance);
+        console.log('interest', interest);
+        cardSums[card.id] += interest;
+      });
+    });
+
+    return cardSums;
+
+  }
+
   public getWalletCount(): number {
     return this.wallets.length;
   }
