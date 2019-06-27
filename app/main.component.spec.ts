@@ -42,15 +42,19 @@ describe('MainComponent', () => {
 
       let testResult = component.sumInterestByPerson(component.persons[0]);
 
-      expect(testResult).toEqual(16);
+      expect(testResult).toBe(16);
 
     });
 
-     it('will sum all the interest for a person and break it down by card', () => {
+    it('will sum all the interest for a person and break it down by card', () => {
 
       let testResult = component.sumInterestForPersonListByCard(component.persons[0]);
 
-      expect(testResult).toEqual(16);
+      let testSum = 0;
+      Object.keys(testResult).forEach(id => { testSum += testResult[id] });
+
+      expect(testSum).toBe(16);
+      expect(testResult[CardType.MC]).toBe(5);
 
     });
 
@@ -64,7 +68,7 @@ describe('MainComponent', () => {
 
       let testResult = component.getWalletCount();
 
-      expect(testResult).toEqual(2);
+      expect(testResult).toBe(2);
 
     });
 

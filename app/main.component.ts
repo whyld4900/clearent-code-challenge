@@ -47,7 +47,6 @@ export class MainComponent {
       this.cards.forEach(card => {
         cardSums[card.id] = 0;
         const interest = this.interestSVC.calculateInterestByCard(card.id, card.balance);
-        console.log('interest', interest);
         cardSums[card.id] += interest;
       });
     });
