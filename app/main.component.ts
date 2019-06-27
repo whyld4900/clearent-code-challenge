@@ -6,9 +6,7 @@ import { InterestService } from './interest.service';
 
 @Component({
   selector: 'clearent-main',
-  template: `<br><div>persons: <pre>{{persons | json}}</pre></div><hr>
-            <div>wallets: <pre>{{wallets | json}}</pre></div><hr>
-            <div>cards: <pre>{{cards | json}}</pre></div>`
+  template: `<p>Tests results are above. :)</p>`
 })
 export class MainComponent {
 
@@ -19,6 +17,17 @@ export class MainComponent {
   constructor(
     public interestSVC: InterestService
   ) { }
+
+  public sumInterestForAllPersons(persons: number[]): number {
+    const sum = persons.map(person => {
+      return this.sumInterestByPerson(person);
+    });
+
+    return sum.reduce((acc, interest) => {
+      acc += interest;
+      return acc;
+    }, 0)
+  }
 
   public sumInterestByPerson(id: number): number {
 
@@ -36,6 +45,21 @@ export class MainComponent {
         return acc;
       }, 0);
     });
+
+    return sum;
+
+  }
+
+  public sumInterestByWallet(id: number): number {
+
+    const sum = this.cards.reduce((acc, card) => {
+
+      if (card.walletId === id) {
+        acc += this.interestSVC.calculateInterestByCard(card.id, card.balance);
+      }
+
+      return acc;
+    }, 0);
 
     return sum;
 

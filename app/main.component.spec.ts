@@ -100,4 +100,62 @@ describe('MainComponent', () => {
 
   });
 
+  describe('2-person|2-wallet|4-cards', () => {
+
+    const testWallets = [
+      { id: 1, personId: 1 },
+      { id: 2, personId: 2 }
+    ];
+
+    const testCards = [
+      { id: CardType.MC, walletId: 1, balance: 100.00 },
+      { id: CardType.MC, walletId: 2, balance: 100.00 },
+      { id: CardType.Visa, walletId: 1, balance: 100.00 },
+      { id: CardType.Visa, walletId: 2, balance: 100.00 }
+    ];
+
+    it('will sum all the interest for all persons', () => {
+
+      component.persons = [1, 2];
+      component.wallets = testWallets;
+      component.cards = testCards;
+
+
+      let testResult = component.sumInterestForAllPersons(component.persons);
+
+      expect(testResult).toBe(30);
+
+    });
+
+    it('will sum all the interest for each person', () => {
+
+      component.persons = [1, 2];
+      component.wallets = testWallets;
+      component.cards = testCards;
+
+      component.persons.forEach(person => {
+        let testResult = component.sumInterestByPerson(person);
+
+        expect(testResult).toBe(15);
+      });
+
+
+    });
+
+    it('will sum all the interest for a wallet', () => {
+
+      component.persons = [1, 2];
+      component.wallets = testWallets;
+      component.cards = testCards;
+
+      component.wallets.forEach(wallet => {
+        let testResult = component.sumInterestByWallet(wallet.id);
+
+        expect(testResult).toBe(15);
+      });
+
+    });
+
+  });
+
 });
